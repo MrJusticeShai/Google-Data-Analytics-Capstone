@@ -34,7 +34,13 @@ Analyze Cyclistic historical trips data to gain insights into how do annual memb
 
 # *PREPARE*
 
-* to be continued!
+## Dataset
+* The data set is publicly available on [divvy-tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) , index of bucket.
+* The data has been made available by
+Motivate International Inc, a third party company.
+* Data Collected include..
+
+
 
 
 
@@ -42,7 +48,6 @@ Analyze Cyclistic historical trips data to gain insights into how do annual memb
 ## Tools :
 SQL and R for Data Cleaning, Data Transformation, Data Visualization, and Data Analysis.
 
-## Dataset :
-The data set is publicly available on [divvy-tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) , index of bucket.
+
 
 
