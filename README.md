@@ -132,33 +132,71 @@ null_values %>%
 ### Data Transformation/Manipulation Steps :
 1. Create new coulmn (ride_length)
 2. Create new column (day_of_week)
-3. Perform statistical analysis on dataset
+
 
 ```{r}
 trips_frameClean$ride_length <- trips_frameClean$ended_at - trips_frameClean$started_at
 trips_frameClean$ride_length <- hms::hms(seconds_to_period(trips_frameClean$ride_length))
 
-trips_frameClean$day_of_week <- wday(trips_frameClean$started_at, label = FALSE)
+
+ trips_frameClean$day_of_week <- wday(trips_frameClean$started_at, label = FALSE)
+```
+
+
+
+*********************************************************************************************************************************************************
+
+ # *ANALYSIS*
+ 
+ ## Perform Calculations :
+  * count number of rides
+  * averages (ride_length, ride_length for members & casual riders)
+  * min and max ride lengths
+  * number of rides for member_casual number
+  * average ride length by each day for member_casual
+  * observe data by membership type and day_of_week
+ 
+ 
+  
+```{r}
+total_rides <- trips_frameClean %>%
+   group_by(member_casual) %>%
+      summarize(count = n(), .groups="drop")
+  
+trips_frameClean %>%
+   group_by(ride_id, day_of_week) %>%
+      summarize(num_of_rides = n())
 
 trips_frameClean %>% 
   summarize(mean(ride_length))
+  
+trips_frameClean %>%
+   group_by(member_casual) %>%
+      summarize(mean(ride_length))
+      
+ trips_frameClean %>%
+   group_by(day_of_week) %>%
+      summarize(mean(ride_length))
   
 trips_frameClean %>% 
   summarize(max(ride_length))
   
  trips_frameClean %>% 
   summarize(min(ride_length))
+  
+ aggregate(trips_frameClean$ride_length ~ trips_frameClean$member_casual + trips_frameClean$day_of_week, FUN = mean)
  
  Mode(trips_frameClean$day_of_week)
- ```
-
-*********************************************************************************************************************************************************
-
- # *ANALYSIS*
  
- 
-  
-  
+ trips_frameClean %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>% 
+   group_by(member_casual, weekday) %>% 
+     summarize(numb_of_rides = n(), average_length = mean(ride_length)) %>% 
+      arrange(member_casual, weekday)
+ ````
+
+*****************************************************************************************************************************************************
+# *SHARE*
 
 
 
