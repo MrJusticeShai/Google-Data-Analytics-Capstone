@@ -106,7 +106,62 @@ Merge CSV files into a single data-frame
 trips_frame <- rbind(jan_2021, feb_2021, mar_2021, apr_2021, may_2021, june_2021)
 ```
 
-## Data Cleaning and Manipulation
+## Data Cleaning and Manipulation:
+
+### Data Cleaning Steps :
+1. Define and count null or missing values and, then remove them
+2. Check for duplicated entries, and amend
+3. Define incorrect values and clean up incorrect values (ex. data with started_at > ended_at)
+
+```{r}
+null_values <-sapply(trips_frame, function(x) sum(is.na(x))) %>%
+  as.data.frame()
+null_values %>%
+  ggplot(aes(x = rownames(missing_values), y = .)) + geom_bar(stat = "identity")
+ colSums(is.na(trips_frame))
+ 
+ trips_frameClean <- trips_frame[complete.cases(trips_frame), ]
+ 
+ trips_frameClean <- trips_frameClean %>% 
+  filter(trips_frameClean$started_at < trips_frameClean$ended_at)
+```
+  
+
+
+
+### Data Transformation/Manipulation Steps :
+1. Create new coulmn (ride_length)
+2. Create new column (day_of_week)
+3. Perform statistical analysis on dataset
+
+```{r}
+trips_frameClean$ride_length <- trips_frameClean$ended_at - trips_frameClean$started_at
+trips_frameClean$ride_length <- hms::hms(seconds_to_period(trips_frameClean$ride_length))
+
+trips_frameClean$day_of_week <- wday(trips_frameClean$started_at, label = FALSE)
+
+trips_frameClean %>% 
+  summarize(mean(ride_length))
+  
+trips_frameClean %>% 
+  summarize(max(ride_length))
+  
+ trips_frameClean %>% 
+  summarize(min(ride_length))
+ 
+ Mode(trips_frameClean$day_of_week)
+ ```
+
+*********************************************************************************************************************************************************
+
+ # *ANALYSIS*
+ 
+ 
+  
+  
+
+
+
 
 
 
