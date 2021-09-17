@@ -138,7 +138,6 @@ null_values %>%
 trips_frameClean$ride_length <- trips_frameClean$ended_at - trips_frameClean$started_at
 trips_frameClean$ride_length <- hms::hms(seconds_to_period(trips_frameClean$ride_length))
 
-
  trips_frameClean$day_of_week <- wday(trips_frameClean$started_at, label = FALSE)
 ```
 
